@@ -123,6 +123,7 @@ const getVertex2Vertex = (mesh) => {
   for (let i = 0; i < nVertices; i++) v2v[i] = new Array();
   for (const edge of edges) {
     let [p, q] = JSON.parse(edge);
+    if (p >= mesh.nVertices() || q > mesh.nVertices()) continue;
     v2v[p].push(q);
     v2v[q].push(p);
   }

@@ -2,7 +2,6 @@ import { assert, expect, test } from "vitest";
 import { HalfMesh } from "../src/halfmesh";
 import { Grid } from "../src/library";
 import { writeObj } from "../src/io";
-import { Mesh } from "../src/mesh";
 import { getVertex2Vertex } from "../src/adjacency";
 import { readMesh } from "./helpers";
 

@@ -1,4 +1,4 @@
-import { assert, expect, test } from "vitest";
+import { expect, test } from "vitest";
 import { TriangleAdjacencies, getVertex2Vertex } from "../src/adjacency";
 import { Grid } from "../src/library";
 
@@ -15,5 +15,36 @@ test("Grid (Triangle, 2x2) Adjacencies", () => {
 test("Grid (Triangle, 2x2) Vertex2Vertex", () => {
   let mesh = new Grid("triangle", 2, 2);
   const v2v = getVertex2Vertex(mesh);
-  console.log(v2v);
+  expect(v2v[0]).toContain(1);
+  expect(v2v[0]).toContain(3);
+  expect(v2v[0]).toContain(4);
+  expect(v2v[1]).toContain(0);
+  expect(v2v[1]).toContain(2);
+  expect(v2v[1]).toContain(4);
+  expect(v2v[1]).toContain(5);
+  expect(v2v[2]).toContain(1);
+  expect(v2v[2]).toContain(5);
+  expect(v2v[3]).toContain(0);
+  expect(v2v[3]).toContain(4);
+  expect(v2v[3]).toContain(6);
+  expect(v2v[3]).toContain(7);
+  expect(v2v[4]).toContain(0);
+  expect(v2v[4]).toContain(1);
+  expect(v2v[4]).toContain(3);
+  expect(v2v[4]).toContain(5);
+  expect(v2v[4]).toContain(7);
+  expect(v2v[4]).toContain(8);
+  expect(v2v[5]).toContain(1);
+  expect(v2v[5]).toContain(2);
+  expect(v2v[5]).toContain(4);
+  expect(v2v[5]).toContain(8);
+  expect(v2v[6]).toContain(3);
+  expect(v2v[6]).toContain(7);
+  expect(v2v[7]).toContain(3);
+  expect(v2v[7]).toContain(4);
+  expect(v2v[7]).toContain(6);
+  expect(v2v[7]).toContain(8);
+  expect(v2v[8]).toContain(4);
+  expect(v2v[8]).toContain(5);
+  expect(v2v[8]).toContain(7);
 });

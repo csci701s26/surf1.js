@@ -124,7 +124,13 @@ class MeshLibrary {
       null,
       () => new Grid("triangle", 10, 10),
     );
-    this.addEntry("Grid (Quad, 2x2)", null, null, () => new Grid("quad", 2, 2));
+    this.addEntry(
+      "Grid (Quad, 2x2)",
+      null,
+      null,
+      null,
+      () => new Grid("quad", 2, 2),
+    );
     this.addEntry(
       "Grid (Quad, 10x10)",
       null,

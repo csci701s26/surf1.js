@@ -68,20 +68,27 @@ class Icosahedron extends Mesh {
   }
 }
 
-class Texture {
-  constructor(gl, path, flip) {
+const loadImage = (path) => {
+  return new Promise((resolve) => {
     let img = new Image();
+    img.onload = () => resolve(img);
+    img.src = path;
+  });
+};
+
+class Texture {
+  constructor() {}
+
+  async load(gl, path, flip) {
+    let img = await loadImage(path);
     let texture = gl.createTexture();
     gl.activeTexture(gl.TEXTURE0);
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, flip ? 1 : 0);
     gl.bindTexture(gl.TEXTURE_2D, texture);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-    img.onload = () => {
-      document.body.appendChild(img);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
-    };
-    img.src = path;
+    document.body.appendChild(img);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img);
     img.hidden = true;
   }
 }
@@ -182,7 +189,9 @@ class MeshLibrary {
         mesh.triangles = [...obj.indices];
         mesh.texcoords =
           obj.textures && obj.textures.length > 0 ? obj.textures : null;
-        mesh.texture = new Texture(gl, entry.imgPath, entry.imgFlip);
+        mesh.texture = new Texture();
+        if (entry.imgPath)
+          await mesh.texture.load(gl, entry.imgPath, entry.imgFlip);
       }
     } catch (error) {
       const msg =

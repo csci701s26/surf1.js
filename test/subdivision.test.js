@@ -5,7 +5,7 @@ import { Icosahedron } from "../src/library";
 import { readMesh } from "./helpers";
 
 const subdivideSphere = (mesh) => {
-  let edgeMap = {};
+  let edgeMap = new Map();
   let edgeIndices = new Array(3);
   let newTriangles = new Array();
   const nVertices = mesh.nVertices();

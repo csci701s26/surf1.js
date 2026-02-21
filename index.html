@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>surf.js</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌊</text></svg>"
+    />
+  </head>
+  <body style="margin: 0px; padding: 0px">
+    <div
+      id="panel"
+      class="markdown-body"
+      style="
+        padding: 45px;
+        background-color: lightblue;
+        border: 2px solid black;
+      "
+    >
+      <div>
+        <select id="select-mesh"></select>
+        <select id="select-loader">
+          <option title="Preserves polygons, disables texturing.">Basic</option>
+          <option title="Triangulates faces, enables texturing.">
+            webgl-obj-loader
+          </option>
+        </select>
+        <button id="button-load">Load</button>
+
+        <input type="checkbox" id="checkbox-faces" checked />
+        <label for="checkbox-faces">Show Faces</label>
+        <input type="checkbox" id="checkbox-lines" checked />
+        <label for="checkbox-lines">Show Lines</label>
+        <input type="checkbox" id="checkbox-edges" checked />
+        <label for="checkbox-edges">Show Edges</label>
+        <input type="checkbox" id="checkbox-vertices" />
+        <label for="checkbox-vertices">Show Vertices</label>
+        <input type="checkbox" id="checkbox-diffuse" checked />
+        <label for="checkbox-diffuse">Diffuse</label>
+        <input type="checkbox" id="checkbox-specular" checked />
+        <label for="checkbox-specular">Specular</label>
+        <input type="checkbox" id="checkbox-texture" />
+        <label for="checkbox-texture">Texture</label>
+        <input type="range" min="1" max="25" value="5" id="range-point-size" />
+        <label for="range-point-size">Point Size</label>
+      </div>
+    </div>
+    <div id="viewer" style="text-align: center">
+      <canvas id="renderer-canvas" width="600" height="600"></canvas>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

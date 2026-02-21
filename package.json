@@ -1,0 +1,30 @@
+{
+  "name": "surf.js",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "vitest run",
+    "build": "vite build",
+    "start": "vite preview",
+    "dev": "vite",
+    "setup": "node setup.mjs",
+    "cleanup": "node cleanup.mjs",
+    "postinstall": "node setup.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@datastructures-js/priority-queue": "^6.3.5",
+    "github-markdown-css": "^5.9.0",
+    "gl-matrix": "^3.4.4",
+    "robust-predicates": "^3.0.2",
+    "vite": "^4.5.14",
+    "webgl-obj-loader": "^2.0.8"
+  },
+  "devDependencies": {
+    "fflate": "^0.8.2",
+    "vitest": "^0.34.6"
+  }
+}

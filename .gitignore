@@ -1,0 +1,7 @@
+dist
+package-lock.json
+node_modules
+public/assets
+public/models.json
+public/models
+public/test

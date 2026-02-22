@@ -20,7 +20,8 @@ const subdivideSphere = (mesh) => {
 
       // TODO determine the index of the point on this edge,
       // possibly creating a new point which will get pushed to mesh.vertices.
-      // Use the midpointOnSphere function defined above.
+      // Use the getMidpoint function imported from "../src/utils"
+      // and then place this point on the sphere using the projectToSphere function.
     }
 
     // TODO define four new triangles (and push to newTriangles)

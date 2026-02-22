@@ -28,6 +28,10 @@ class TriangleAdjacencies {
     this.data[3 * triangle + faceIndex] = neighbor;
   }
 
+  /**
+   * Creates the adjacency relationships.
+   * @param {Array[Integer]} triangles array of triangles (mesh.triangles)
+   */
   build(triangles) {
     this.data = new Array(triangles.length).fill(-1);
     const nTriangles = triangles.length / 3;
@@ -42,8 +46,8 @@ class TriangleAdjacencies {
           const twinInfo = edges.get(twinId);
           const twinElem = twinInfo[0];
           const twinFace = twinInfo[1];
-          this.data[3 * twinElem + twinFace] = elem;
-          this.data[3 * elem + face] = twinElem;
+          this.set(twinElem, twinFace, elem);
+          this.set(elem, face, twinElem);
           edges.delete(twinId);
         } else {
           edges.set(edgeId, [elem, face]);
@@ -59,18 +63,86 @@ class TriangleAdjacencies {
  * Although 3 could be used in the encoding, 4 enables the use of bitwise operators.
  */
 class EncodedTriangleAdjacencies {
+  constructor(triangles) {
+    this.data = new Array();
+    this.build(triangles);
+  }
+
+  /**
+   * Allocates the adjacency data.
+   * @param {Integer} nTriangles
+   */
+  create(nTriangles) {
+    for (let k = 0; k < nTriangles * 4; k++) this.data.push(-1);
+  }
+
+  /**
+   * Encodes a triangle-face pair.
+   * @param {Integer} k triangle.
+   * @param {Integer} j face index (0, 1, 2).
+   * @returns
+   */
   static encode(k, j) {
     return (k << 2) + j;
   }
 
-  static decode(a) {
-    const j = a & 3;
-    return [a >> 2, j];
+  /**
+   * Retrieves the triangle from an encoding.
+   * @param {Integer} a: adjacency encoding.
+   * @returns triangle index.
+   */
+  static decodeTriangle(a) {
+    return a >> 2;
   }
 
-  static buildFrom(triangles) {
-    let adj = new Array(triangles.length).fill(-1);
+  /**
+   * Retrieves the local face index from an encoding.
+   * @param {Integer} a: adjacency encoding.
+   * @returns face index (0, 1, 2).
+   */
+  static decodeFace(a) {
+    return a & 3;
+  }
+
+  /**
+   * Set two adjacency encodings to point to each other.
+   * @param {Integer} ai
+   * @param {Integer} aj
+   */
+  setAdjacent(ai, aj) {
+    this.data[ai] = aj;
+    this.data[aj] = ai;
+  }
+
+  /**
+   * Retrieves the adjacency data in two modes.
+   * @param {Integer} k Mode 1: encoded (elem, face), Mode 2: elem.
+   * @param {Integer} j Mode 1: -1, Mode 2: face.
+   * @returns
+   */
+  get(k, j = -1) {
+    if (j < 0) return this.data[k]; // k is the encoded (elem, face)
+    return this.data[EncodedTriangleAdjacencies.encode(k, j)];
+  }
+
+  /**
+   * Get the adjacent triangle from a triangle-face pair.
+   * @param {Integer} k triangle index.
+   * @param {Integer} j face index (0, 1, 2).
+   * @returns triangle across face j of triangle k.
+   */
+  getNeighbor(k, j) {
+    return this.get(k, j) >> 2;
+  }
+
+  /**
+   * Creates the adjacency relationships.
+   * @param {Array[Integer]} triangles array of triangles (mesh.triangles)
+   */
+  build(triangles) {
     const nTriangles = triangles.length / 3;
+    this.create(nTriangles);
+
     let edges = new Map();
     for (let elem = 0; elem < nTriangles; elem++) {
       for (let face = 0; face < 3; face++) {
@@ -78,18 +150,16 @@ class EncodedTriangleAdjacencies {
         const q = triangles[3 * elem + TRIANGLE_FACE_NODES[face][1]];
         const edgeId = JSON.stringify([p, q]);
         const twinId = JSON.stringify([q, p]);
-        const a = this.encode(elem, face);
+        const a = EncodedTriangleAdjacencies.encode(elem, face);
         if (edges.has(twinId)) {
           const b = edges.get(twinId);
-          adj[b] = a;
-          adj[a] = b;
+          this.setAdjacent(a, b);
           edges.delete(twinId);
         } else {
           edges.set(edgeId, a);
         }
       }
     }
-    return adj;
   }
 }
 

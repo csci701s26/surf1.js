@@ -13,7 +13,7 @@ test("Find Triangle", async () => {
   // add centroids to store the path in mesh.lines
   let numVertices = mesh.vertices.length / 3;
   for (let k = 0; k < mesh.triangles.length / 3; k++) {
-    let centroid = getCentroid(mesh.getTriangle(k), mesh.vertices);
+    let centroid = getCentroid(mesh.vertices, mesh.getTriangle(k));
     mesh.vertices.push(centroid[0], centroid[1], centroid[2]);
   }
   mesh.lines = []; // initialize the lines to store the path

@@ -2,7 +2,6 @@ export default {
   base: "/surf.js/",
   test: {
     exclude: [
-      "projects/*",
       ...(process.env.CI
         ? [
             "test/subdivision.*",

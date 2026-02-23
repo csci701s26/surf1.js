@@ -25,7 +25,6 @@ const writeObjText = (mesh) => {
     data += `f ${mesh.quads[4 * i] + 1} ${mesh.quads[4 * i + 1] + 1} ${mesh.quads[4 * i + 2] + 1} ${mesh.quads[4 * i + 3] + 1}\n`;
   }
 
-  //console.log(mesh.nPolygons());
   for (let i = 0; i < mesh.nPolygons(); i++) {
     data += "f ";
     const polygon = mesh.getPolygon(i);
@@ -148,7 +147,7 @@ const parseObjText = (text, duplicate) => {
         // TODO hash vertexData and duplicate vertices if necessary (if allowed)
         if (duplicate) console.warning("Not implemented");
         let vertexData = vertexText.split("/");
-        face.push(parseInt(vertexData[0] - 1));
+        face.push(parseInt(vertexData[0]) - 1);
       }
       faces.push(face);
     } else if (data[0] === "l") {

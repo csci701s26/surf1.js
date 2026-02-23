@@ -4,7 +4,7 @@ class HalfNode {
   /**
    * Constructs a half-node.
    * @param {vec3} point 3d coordinates of the point.
-   * @param {*} edge one edge emanating from this node.
+   * @param {HalfEdge} edge one edge emanating from this node.
    */
   constructor(point, edge) {
     this.point = point.slice();
